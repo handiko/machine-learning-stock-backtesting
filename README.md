@@ -1,13 +1,13 @@
-# 📈 XGBoost Stock Backtesting Framework v4
+# XGBoost Stock Backtesting Framework v4
 
 > *Can a machine learning model beat buy-and-hold on Indonesian stocks?*  
 > This project builds, tests, and rigorously evaluates a trading strategy powered by XGBoost — one of the most battle-tested ML algorithms in quantitative finance.
 
-![Dashboard Example](BBCA_JK_xgb_backtest_dashboard.png)
+
 
 ---
 
-## 🧭 What Is This Project?
+## What Is This Project?
 
 Imagine you could teach a computer to study 15 years of stock price history — every wiggle, every trend, every indicator traders use — and learn *when* a stock is most likely to rise in the next few days. That's exactly what this framework does.
 
@@ -17,7 +17,7 @@ The framework is built with a **trader's mindset**: it accounts for realistic tr
 
 ---
 
-## 🎯 Goals
+## Goals
 
 | Goal | How It's Addressed |
 |---|---|
@@ -29,14 +29,14 @@ The framework is built with a **trader's mindset**: it accounts for realistic tr
 
 ---
 
-## 🏗️ How It Works — Step by Step
+## How It Works — Step by Step
 
-### 1. 📥 Data Download
+### 1. Data Download
 Stock price data (OHLCV: Open, High, Low, Close, Volume) is downloaded automatically via `yfinance` for any ticker — Indonesian stocks (`.JK`), US stocks, or any market supported by Yahoo Finance. The default lookback is **15 years**.
 
 ---
 
-### 2. 🔬 Feature Engineering (~80 Technical Indicators)
+### 2. Feature Engineering (~80 Technical Indicators)
 Raw prices are transformed into features that describe the *current market state*. These are the same signals technical traders use, but fed to a machine instead of human eyes:
 
 - **Trend features** — price relative to SMA(5/10/20/50/100/200), EMA crossovers, MACD, ADX
@@ -50,7 +50,7 @@ All features are **normalized relative to price** (e.g., `(Close - SMA) / SMA`) 
 
 ---
 
-### 3. 🏷️ Labeling
+### 3. Labeling
 The model learns to predict: *"Will this stock rise by at least X% over the next N days?"*
 
 - **Buy-Only mode**: Label = `1` (buy signal) if the stock gains > `label_pct`% in `forward_days` trading days, else `0` (stay flat).
@@ -60,7 +60,7 @@ The default is **3-day horizon** with a **1% threshold** — asking the model to
 
 ---
 
-### 4. ✂️ Data Splitting (The Most Critical Step)
+### 4. Data Splitting (The Most Critical Step)
 The dataset is split **chronologically** — never randomly — into three non-overlapping periods:
 
 ```
@@ -72,11 +72,11 @@ The dataset is split **chronologically** — never randomly — into three non-o
 - **Validation**: Used to stop training early (prevent overfitting) and tune thresholds.
 - **Hold-Out**: The model has *never seen this data*. Performance here is the only honest measure.
 
-> ⚠️ **Why this matters**: Most "backtests" you see online are overfit — the model was implicitly tuned on the test data. This framework enforces a strict wall between learning and evaluation.
+> **Why this matters**: Most "backtests" you see online are overfit — the model was implicitly tuned on the test data. This framework enforces a strict wall between learning and evaluation.
 
 ---
 
-### 5. 🧠 Model Training
+### 5. Model Training
 
 **XGBoost** (eXtreme Gradient Boosting) is an ensemble of decision trees that learns from its own mistakes iteratively. It's the algorithm behind many winning solutions in quantitative trading competitions.
 
@@ -94,7 +94,7 @@ Key anti-overfitting measures baked in:
 
 ---
 
-### 6. 🔒 Purged Walk-Forward Cross-Validation
+### 6. Purged Walk-Forward Cross-Validation
 
 Standard k-fold cross-validation is **broken for time series** — it lets the model train on data *after* the test period, leaking future information.
 
@@ -109,7 +109,7 @@ The output is a **CV AUC score** — a leakage-free estimate of how well the mod
 
 ---
 
-### 7. 🗂️ Feature Selection
+### 7. Feature Selection
 
 Training on all 80+ features often hurts performance — noise overwhelms signal. After initial training, the framework ranks features by **XGBoost importance** and keeps only the **top-K** (default: 15). The model is then retrained on this curated feature set.
 
@@ -117,7 +117,7 @@ Training on all 80+ features often hurts performance — noise overwhelms signal
 
 ---
 
-### 8. 🔄 Walk-Forward Retraining (Expanding Window)
+### 8. Walk-Forward Retraining (Expanding Window)
 
 Markets change. A model trained in 2015 may be completely wrong in 2023. To handle this:
 
@@ -135,7 +135,7 @@ This is how professional quant funds operate. It's the difference between a stat
 
 ---
 
-### 9. 📡 Signal Generation
+### 9. Signal Generation
 
 Raw probability outputs from the model are converted to trading signals using a **dual filter**:
 
@@ -146,7 +146,7 @@ An optional **SMA regime filter** (e.g., SMA-200) can restrict longs to bull mar
 
 ---
 
-### 10. 💼 Realistic Backtest Engine
+### 10. Realistic Backtest Engine
 
 The backtest is designed to be as close to real trading as possible:
 
@@ -156,7 +156,7 @@ The backtest is designed to be as close to real trading as possible:
 
 ---
 
-## 📊 How to Read the Dashboard
+## How to Read the Dashboard
 
 The dashboard produced by the script has 6 panels:
 
@@ -166,7 +166,7 @@ The dashboard produced by the script has 6 panels:
 - Three shaded regions mark **In-Sample**, **Validation**, and **Hold-Out** periods
 - Log scale lets you compare percentage gains fairly across time
 
-> 🟢 You want the blue line to stay above orange, especially in the **Hold-Out** region — that's the only part that counts.
+> You want the blue line to stay above orange, especially in the **Hold-Out** region — that's the only part that counts.
 
 ### Top-Right: Feature Importance
 - Shows which of the top-15 selected features drive the model's decisions
@@ -207,7 +207,7 @@ The dashboard produced by the script has 6 panels:
 
 ---
 
-## 🛠️ Installation & Usage
+## Installation & Usage
 
 ### Requirements
 ```bash
@@ -245,7 +245,7 @@ CONFIG = dict(
 
 ---
 
-## ⚠️ Important Caveats
+## Important Caveats
 
 This is a **research and educational framework**, not a live trading system. Before drawing conclusions:
 
@@ -257,7 +257,7 @@ This is a **research and educational framework**, not a live trading system. Bef
 
 ---
 
-## 🔧 Key Design Decisions
+## Key Design Decisions
 
 | Decision | Rationale |
 |---|---|
@@ -270,7 +270,7 @@ This is a **research and educational framework**, not a live trading system. Bef
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 ├── ML_Stock_Backtest.py              # Main framework
@@ -281,7 +281,7 @@ This is a **research and educational framework**, not a live trading system. Bef
 
 ---
 
-## 📜 License
+## License
 
 MIT — use freely, contribute back if you improve it.
 
