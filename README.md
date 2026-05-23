@@ -160,6 +160,8 @@ The backtest is designed to be as close to real trading as possible:
 
 The dashboard produced by the script has 6 panels:
 
+![](./INDF.JK_xgb_backtest_dashboard.png)
+
 ### Top-Left: Equity Curve (Log Scale)
 - **Blue line** = Strategy performance
 - **Orange dashed line** = Buy & Hold benchmark
