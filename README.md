@@ -3,7 +3,7 @@
 > *Can a machine learning model beat buy-and-hold on Indonesian stocks?*  
 > This project builds, tests, and rigorously evaluates a trading strategy powered by XGBoost — one of the most battle-tested ML algorithms in quantitative finance.
 
-![](./BBCA.JK_xgb_backtest_dashboard.png)
+![](./INDF.JK_xgb_backtest_dashboard.png)
 
 ---
 
@@ -160,7 +160,7 @@ The backtest is designed to be as close to real trading as possible:
 
 The dashboard produced by the script has 6 panels:
 
-![](./INDF.JK_xgb_backtest_dashboard.png)
+![](./BBCA.JK_xgb_backtest_dashboard.png)
 
 ### Top-Left: Equity Curve (Log Scale)
 - **Blue line** = Strategy performance
