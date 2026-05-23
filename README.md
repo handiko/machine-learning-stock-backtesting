@@ -3,7 +3,7 @@
 > *Can a machine learning model beat buy-and-hold on Indonesian stocks?*  
 > This project builds, tests, and rigorously evaluates a trading strategy powered by XGBoost — one of the most battle-tested ML algorithms in quantitative finance.
 
-
+![](./BBCA.JK_xgb_backtest_dashboard.png)
 
 ---
 
