@@ -205,6 +205,9 @@ The dashboard produced by the script has 6 panels:
 | **# Trades** | Total position changes (entries + exits) | Lower = less friction |
 | **CV AUC** | Cross-validation discrimination score | > 0.55 is meaningful signal |
 
+
+![](./BBCA.JK_bottom_right.png)
+
 ---
 
 ## Installation & Usage
